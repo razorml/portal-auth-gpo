@@ -1,0 +1,27 @@
+<div class="dashboard-wrapper">
+    <div class="dashboard-card" *ngIf="!urlSeleccionada">
+      <img src="https://i.imgur.com/I80W1Q0.png" width="80" style="margin-bottom: 15px;" alt="avatar">
+      <h2>Bienvenido al Portal de Autenticación</h2>
+      <p>Selecciona una opción para continuar</p>
+  
+      <div class="botones">
+        <button nz-button block class="btn-acceso" (click)="navegar('https://angular.io')">
+          Acceso a GPO
+        </button>
+        <button nz-button block class="btn-acceso" (click)="navegar('https://mdn.github.io/learning-area/html/multimedia-and-embedding/iframe/example.html')">
+          Acceso a Tesorería
+        </button>
+        <button nz-button block class="btn-acceso" (click)="navegar('https://ng.ant.design')">
+          Acceso a Legalización
+        </button>
+        <button nz-button nzDanger block (click)="cerrarSesion()">Cerrar sesión</button>
+      </div>
+    </div>
+  
+    <!-- Vista embebida a pantalla completa -->
+    <div class="iframe-container" *ngIf="urlSeleccionada">
+      <button nz-button (click)="urlSeleccionada = null" style="margin: 10px;">Volver al menú</button>
+      <iframe [src]="urlSeleccionada" class="iframe-full"></iframe>
+    </div>
+  </div>
+  

@@ -1,0 +1,41 @@
+<div class="login-container">
+    <nz-card class="login-card" [nzBordered]="false">
+      <div class="login-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Logo usuario" class="logo" />
+        <h2>Ingreso al portal</h2>
+      </div>
+  
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="login-form">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">Usuario</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input
+              nz-input
+              name="usuario"
+              [(ngModel)]="usuario"
+              placeholder="Ej: juan.perez"
+              required />
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">Contraseña</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input
+              nz-input
+              type="password"
+              name="contrasena"
+              [(ngModel)]="contrasena"
+              placeholder="••••••••"
+              required />
+          </nz-form-control>
+        </nz-form-item>
+  
+        <div class="login-actions">
+            <button nz-button nzType="primary" [disabled]="!usuario || !contrasena" type="submit">Ingresar</button>
+          <a (click)="irOlvido()" class="olvido-link">Olvidé mi contraseña</a>
+        </div>
+      </form>
+    </nz-card>
+  </div>
+  

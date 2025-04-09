@@ -1,0 +1,14 @@
+<div class="error-container">
+    <nz-card class="error-card" [nzBordered]="false">
+      <div class="error-header">
+        <nz-result
+          nzStatus="error"
+          nzTitle="Error de autenticación"
+          nzSubTitle="Los datos ingresados no son correctos. Por favor verifica tu usuario y contraseña."
+        ></nz-result>
+  
+        <button nz-button nzType="primary" (click)="volver()">Volver al login</button>
+      </div>
+    </nz-card>
+  </div>
+  
