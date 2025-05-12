@@ -1,10 +1,38 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
+import { decodeToken } from '../../helpers/jwt.helper';
+import { Observable } from 'rxjs';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class LoginService {
-  autenticar(usuario: string, contrasena: string): Observable<boolean> {
-    return of(usuario === 'admin' && contrasena === '123'); 
+
+  private baseUrl = environment.apiUrl;
+
+  constructor(private http: HttpClient) {}
+
+  autenticar(usuario: string, contrasena: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}login`, {
+      username: usuario,
+      password: contrasena
+    }).pipe(
+      tap(response => {
+        if (response.token) {
+          const token = response.token;
+          const payload = decodeToken(token);
+
+          //Guardar todos los datos relevantes en localStorage
+          localStorage.setItem('token', token);
+          localStorage.setItem('exp', payload.exp.toString());
+          localStorage.setItem('usuario', `${response.cn} ${response.sn}`);
+          localStorage.setItem('roles', JSON.stringify(response.roles));
+          localStorage.setItem('isAdmin', response.isAdmin.toString());
+        }
+      })
+    );
   }
-  
 }

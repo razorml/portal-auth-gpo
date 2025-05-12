@@ -1,27 +1,62 @@
+<!-- Encabezado fijo con nombre de usuario y botón de volver -->
+<div style="display: flex; justify-content: space-between; align-items: center; background-color: #003366; padding: 10px; color: white;">
+  <button *ngIf="urlSeleccionada" nz-button (click)="urlSeleccionada = null">Volver al menú</button>
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <nz-avatar [nzText]="usuario.charAt(0).toUpperCase()" nzSize="small"></nz-avatar>
+    <span>{{ usuario }}</span>
+  </div>
+</div>
+
 <div class="dashboard-wrapper">
-    <div class="dashboard-card" *ngIf="!urlSeleccionada">
-      <img src="https://i.imgur.com/I80W1Q0.png" width="80" style="margin-bottom: 15px;" alt="avatar">
-      <h2>Bienvenido al Portal de Autenticación</h2>
-      <p>Selecciona una opción para continuar</p>
-  
-      <div class="botones">
-        <button nz-button block class="btn-acceso" (click)="navegar('https://angular.io')">
-          Acceso a GPO
-        </button>
-        <button nz-button block class="btn-acceso" (click)="navegar('https://mdn.github.io/learning-area/html/multimedia-and-embedding/iframe/example.html')">
-          Acceso a Tesorería
-        </button>
-        <button nz-button block class="btn-acceso" (click)="navegar('https://ng.ant.design')">
-          Acceso a Legalización
-        </button>
-        <button nz-button nzDanger block (click)="cerrarSesion()">Cerrar sesión</button>
-      </div>
-    </div>
-  
-    <!-- Vista embebida a pantalla completa -->
-    <div class="iframe-container" *ngIf="urlSeleccionada">
-      <button nz-button (click)="urlSeleccionada = null" style="margin: 10px;">Volver al menú</button>
-      <iframe [src]="urlSeleccionada" class="iframe-full"></iframe>
+
+  <!-- Pantalla de selección (cuando no hay URL seleccionada) -->
+  <div class="dashboard-card" *ngIf="!urlSeleccionada">
+    <img src="https://i.imgur.com/I80W1Q0.png" width="80" style="margin-bottom: 15px;" alt="avatar" />
+    <h2>Bienvenido al Portal de Autenticación</h2>
+    <p>Selecciona una opción para continuar</p>
+    <div class="botones">
+      <!-- Botones por permiso desde el JSON -->
+      <button
+        *ngFor="let permiso of permisos"
+        nz-button
+        block
+        class="btn-acceso"
+        [title]="permiso.descripcion"
+        (click)="navegar(permiso.url)">
+        {{ permiso.nombreBtn }}
+      </button>    
+      <!-- Botón solo si isAdmin es true -->
+      <button
+        *ngIf="isAdmin"
+        nz-button
+        block
+        class="btn-acceso"
+        (click)="navegar('https://tu-url-crear-permisos.com')">
+        Crear permisos
+      </button>    
+      <!-- Cerrar sesión -->
+      <button
+        nz-button
+        nzDanger
+        block
+        (click)="cerrarSesion()">
+        Cerrar sesión
+      </button>
     </div>
   </div>
-  
+  <!-- Vista embebida -->
+  <div class="iframe-container" *ngIf="urlSeleccionada">
+    <iframe [src]="urlSeleccionada" class="iframe-full"></iframe>
+
+    <!-- Contador de expiración -->
+    <div class="contador-expiracion">
+      <strong>Tu sesión expira en:</strong>
+      <span style="font-size: 1.2em">{{ tiempoRestante }}</span>
+    </div>
+  </div>
+   <!-- Modal expiración -->
+   <app-expiracion-sesion-modal
+   *ngIf="mostrarModal"
+   (reintentar)="reintentarAutenticacion($event)">
+ </app-expiracion-sesion-modal>
+</div>

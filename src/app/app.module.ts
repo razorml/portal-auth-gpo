@@ -23,6 +23,8 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ErrorDialogComponent } from './pages/error-dialog/error-dialog.component';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { ExpiracionSesionModalComponent } from './components/expiracion-sesion-modal/expiracion-sesion-modal.component';
 
 
 registerLocaleData(en);
@@ -33,7 +35,8 @@ registerLocaleData(en);
     LoginComponent,
     ForgotPasswordComponent,
     DashboardComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    ExpiracionSesionModalComponent
   ],
   imports: [
     BrowserModule,
@@ -47,8 +50,8 @@ registerLocaleData(en);
     NzCardModule,
     AppRoutingModule,
     NzAlertModule,
-    RouterModule
-    
+    RouterModule,
+    NzAvatarModule    
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

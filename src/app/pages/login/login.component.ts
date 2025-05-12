@@ -22,9 +22,8 @@ export class LoginComponent {
 
   //iniciar sesion
   onSubmit(): void {
-    this.loginService.autenticar(this.usuario, this.contrasena).subscribe(correcto => {
-      if (correcto) {
-        //Guardar inicio de sesion
+    this.loginService.autenticar(this.usuario, this.contrasena).subscribe(response => {
+      if (response && response.autenticado) {
         localStorage.setItem('sesion', 'true');
         this.router.navigate(['/dashboard']);
       } else {
@@ -32,6 +31,5 @@ export class LoginComponent {
       }
     });
   }
-  
   
 }
