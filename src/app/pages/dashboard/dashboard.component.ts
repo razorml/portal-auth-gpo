@@ -3,6 +3,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { jwtDecode } from 'jwt-decode';
 import { LoginService } from '../login/login.service';
 import { ExpiracionSesionModalComponent } from 'src/app/components/expiracion-sesion-modal/expiracion-sesion-modal.component';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,7 +28,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -92,7 +95,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   cerrarSesion(): void {
     localStorage.clear();
-    window.location.href = '/';
+    this.router.navigateByUrl(environment.login);
   }
 
   reintentarAutenticacion(password: string): void {

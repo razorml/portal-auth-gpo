@@ -10,6 +10,7 @@ import { LoginService } from './login.service';
 export class LoginComponent {
   usuario = '';
   contrasena = '';
+  errorAutenticacion: string | null = null;
 
   constructor(private router: Router,
     private loginService: LoginService
@@ -22,14 +23,21 @@ export class LoginComponent {
 
   //iniciar sesion
   onSubmit(): void {
-    this.loginService.autenticar(this.usuario, this.contrasena).subscribe(response => {
-      if (response && response.autenticado) {
-        localStorage.setItem('sesion', 'true');
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.router.navigate(['/error']);
+    this.errorAutenticacion = null; // reinicia mensaje
+    this.loginService.autenticar(this.usuario, this.contrasena).subscribe({
+      next: (response) => {
+        if (response && response.autenticado) {
+          localStorage.setItem('sesion', 'true');
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.errorAutenticacion = 'Usuario o contraseña incorrectos.';
+        }
+      },
+      error: (err) => {
+        this.errorAutenticacion = 'Usuario o contraseña incorrectos.';
+        console.error(err);
       }
     });
-  }
+  } 
   
 }

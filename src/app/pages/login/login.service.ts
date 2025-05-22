@@ -28,7 +28,7 @@ export class LoginService {
           //Guardar todos los datos relevantes en localStorage
           localStorage.setItem('token', token);
           localStorage.setItem('exp', payload.exp.toString());
-          localStorage.setItem('usuario', `${response.cn} ${response.sn}`);
+          localStorage.setItem('usuario', `${usuario}`);
           localStorage.setItem('roles', JSON.stringify(response.roles));
           localStorage.setItem('isAdmin', response.isAdmin.toString());
         }

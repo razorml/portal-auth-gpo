@@ -36,6 +36,9 @@
           <a (click)="irOlvido()" class="olvido-link">Olvidé mi contraseña</a>
         </div>
       </form>
+      <div *ngIf="errorAutenticacion" class="error-message">
+        <nz-alert [nzType]="'error'" [nzMessage]="errorAutenticacion" nzShowIcon></nz-alert>
+      </div>
     </nz-card>
   </div>
   
